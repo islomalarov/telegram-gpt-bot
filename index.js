@@ -24,7 +24,7 @@ bot.on('message', async (msg) => {
         try {
           const chatCompletion = await openai.chat.completions.create({
             messages: [{ role: "user", content: query }],
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o",
           });
 
           const reply = chatCompletion.choices[0].message.content;
@@ -42,7 +42,7 @@ bot.on('message', async (msg) => {
       }
     }
   } else {
-    bot.sendMessage(chatId, 'Не тут-то было')
+    bot.sendMessage(chatId, `Kechirasiz, ushbu bot buyurtma asosida tayyorlangani uchun faqatgina dasturchi tomonidan ruhsat berilgan guruhlarda ishlaydi.
+    Agar sizga ham shunday bot kerak bo'lsa men bilan bog'laning: @islomalarov`)
   }
-
 });
