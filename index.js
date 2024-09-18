@@ -30,7 +30,7 @@ bot.on('message', async (msg) => {
           const reply = chatCompletion.choices[0].message.content;
           bot.sendMessage(chatId, reply, {
             reply_to_message_id: msg.message_id,
-            // parse_mode: 'Markdown' | 'MarkdownV2' | 'HTML',
+            parse_mode: 'Markdown' | 'HTML' | undefined,
           });
         } catch (error) {
           if (error.code === 'insufficient_quota') {
