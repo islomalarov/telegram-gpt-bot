@@ -1,6 +1,6 @@
-import TelegramBot from "node-telegram-bot-api";
-import OpenAI from "openai";
-import dotenv from "dotenv";
+import TelegramBot from 'node-telegram-bot-api';
+import OpenAI from 'openai';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -23,15 +23,21 @@ bot.on('message', async (msg) => {
       if (query.length > 0) {
         try {
           const chatCompletion = await openai.chat.completions.create({
-            messages: [{ role: "user", content: query }],
-            model: "gpt-4o",
+            messages: [{ role: 'user', content: query }],
+            model: 'gpt-4o',
           });
 
           const reply = chatCompletion.choices[0].message.content;
-          bot.sendMessage(chatId, reply, { reply_to_message_id: msg.message_id });
+          bot.sendMessage(chatId, reply, {
+            reply_to_message_id: msg.message_id,
+            parse_mode: 'MarkdownV2',
+          });
         } catch (error) {
           if (error.code === 'insufficient_quota') {
-            bot.sendMessage(chatId, 'Извините, достигнут лимит использования API OpenAI. Пожалуйста, попробуйте позже.');
+            bot.sendMessage(
+              chatId,
+              'Извините, достигнут лимит использования API OpenAI. Пожалуйста, попробуйте позже.',
+            );
           } else {
             bot.sendMessage(chatId, 'Произошла ошибка при обработке запроса.');
           }
@@ -42,7 +48,10 @@ bot.on('message', async (msg) => {
       }
     }
   } else {
-    bot.sendMessage(chatId, `Kechirasiz, ushbu bot buyurtma asosida tayyorlangani uchun faqatgina dasturchi tomonidan ruhsat berilgan guruhlarda ishlaydi.
-    Agar sizga ham shunday bot kerak bo'lsa men bilan bog'laning: @islomalarov`)
+    bot.sendMessage(
+      chatId,
+      `Kechirasiz, ushbu bot buyurtma asosida tayyorlangani uchun faqatgina dasturchi tomonidan ruhsat berilgan guruhlarda ishlaydi.
+    Agar sizga ham shunday bot kerak bo'lsa men bilan bog'laning: @islomalarov`,
+    );
   }
 });
